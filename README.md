@@ -1,150 +1,233 @@
-<p align="center">
-	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-b99b286755aef70355a7084753f89cdb7c9.png">
-</p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.6.8</h1>
-<h4 align="center">基于 Vue/Element UI 和 Spring Boot/Spring Cloud & Alibaba 前后端分离的分布式微服务架构</h4>
-<p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Cloud/stargazers"><img src="https://gitee.com/y_project/RuoYi-Cloud/badge/star.svg?theme=dark"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Cloud"><img src="https://img.shields.io/badge/RuoYi-v3.6.8-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Cloud/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
-</p>
+# 高校教学管理微服务系统
 
-## 平台简介
+基于 [RuoYi-Cloud](https://github.com/yangzongzhuan/RuoYi-Cloud) 构建的高校教学管理系统后端，面向学院、专业、班级、师生、课程、排课和选课等高校教务场景。
 
-若依是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
+当前版本先实现基础数据、手工排课和选课管理，后续可以继续扩展培养方案、成绩管理、考试安排、自动排课、报表和消息通知等业务。
 
-* 采用前后端分离的模式，微服务版本前端(基于 [RuoYi-Vue](https://gitee.com/y_project/RuoYi-Vue))。
-* 后端采用Spring Boot、Spring Cloud & Alibaba。
-* 注册中心、配置中心选型Nacos，权限认证使用Redis。
-* 流量控制框架选型Sentinel，分布式事务选型Seata。
-* 阿里云优惠券：[点我进入](http://aly.ruoyi.vip)，腾讯云优惠券：[点我进入](http://txy.ruoyi.vip)&nbsp;&nbsp;
+## 当前版本
 
-# 版本分支
+- RuoYi：3.6.8
+- Java：17+
+- Spring Boot：4.1.0
+- Spring Cloud：2025.1.2
+- Spring Cloud Alibaba：2025.1.0.0
+- 数据库：MySQL
+- 缓存：Redis
+- 注册中心与配置中心：Nacos
+- 网关：Spring Cloud Gateway
+- 权限：Spring Security + Redis + RuoYi RBAC
+- 数据访问：MyBatis
+- 流量控制：Sentinel
+- 分布式事务组件：Seata
 
-RuoYi-Cloud 后端项目提供 Spring Boot 2.x / 3.x / 4.x 多版本分支的并行维护。
+## 系统能力
 
-| 名称              | 说明                                 | 地址                                                      |
-| :---------------- | :----------------------------------- | :-------------------------------------------------------- |
-| master 默认分支   | Spring Boot 4.x (JDK 17+、Nacos 3.x) | https://gitee.com/y_project/RuoYi-Cloud                   |
-| springboot3 分支  | Spring Boot 3.x (JDK 17+、Nacos 3.x) | https://gitee.com/y_project/RuoYi-Cloud/tree/springboot3  |
-| springboot2 分支  | Spring Boot 2.x (JDK 8+、 Nacos 2.x) | https://gitee.com/y_project/RuoYi-Cloud/tree/springboot2  |
+### 基础数据
 
-RuoYi-Cloud 前端项目提供 Vue 2.x / 3.x / JavaScript TypeScript 版本均可混用搭配
+- 学院管理
+- 专业管理
+- 行政班管理
+- 学生管理
+- 教师管理
+- 课程管理
+- 教室管理
+- 教学班管理
 
-| 项目名称      | **RuoYi-Cloud-Vue2** | **RuoYi-Cloud-Vue3** | **RuoYi-Cloud-Vue3-TypeScript**   |
-| :---          | :---                 | :---                 | :---                              |
-| **前端框架**  | Vue 2               | Vue 3                | Vue 3                             |
-| **脚本语言**  | JavaScript          | JavaScript           | TypeScript                        |
-| **构建工具**  | Vue CLI             | Vite                 | Vite                              |
-| **UI 组件库** | Element UI          | Element Plus         | Element Plus                      |
-| **状态管理**  | Vuex                | Pinia                | Pinia                             |
-| **路由管理**  | Vue Router 3        | Vue Router 4         | Vue Router 4                      |
-| **核心特点**  | 1. 技术栈经典稳定<br>2. 社区资料丰富<br>3. 当前维护重心已转移 | 1. 现代前端技术栈<br>2. 开发体验与性能更优<br>3. 官方主推的活跃版本 | 1. 类型加持，减少沟通成本<br>2. 开发时有提示，效率更高<br>3. 多人协作企业级开发项目 |
-| **仓库地址**  | [RuoYi-Cloud-Vue2](https://gitcode.com/yangzongzhuan/RuoYi-Cloud-Vue2) | [RuoYi-Cloud-Vue3](https://gitcode.com/yangzongzhuan/RuoYi-Cloud-Vue3) | [RuoYi-Cloud-Vue3-TypeScript](https://gitcode.com/yangzongzhuan/RuoYi-Cloud-Vue3/tree/typescript) |
+### 手工排课
 
-## 系统模块
+- 维护教学班、教师、教室、学期和上课节次
+- 按星期和节次维护排课记录
+- 检查教师时间冲突
+- 检查教室时间冲突
+- 检查教学班时间冲突
+- 支持排课记录的新增、修改、查询和删除
 
-~~~
-com.ruoyi     
-├── ruoyi-ui              // 前端框架 [80]
-├── ruoyi-gateway         // 网关模块 [8080]
-├── ruoyi-auth            // 认证中心 [9200]
-├── ruoyi-api             // 接口模块
-│       └── ruoyi-api-system                          // 系统接口
-├── ruoyi-common          // 通用模块
-│       └── ruoyi-common-core                         // 核心模块
-│       └── ruoyi-common-datascope                    // 权限范围
-│       └── ruoyi-common-datasource                   // 多数据源
-│       └── ruoyi-common-log                          // 日志记录
-│       └── ruoyi-common-redis                        // 缓存服务
-│       └── ruoyi-common-seata                        // 分布式事务
-│       └── ruoyi-common-security                     // 安全模块
-│       └── ruoyi-common-sensitive                    // 数据脱敏
-│       └── ruoyi-common-swagger                      // 系统接口
-├── ruoyi-modules         // 业务模块
-│       └── ruoyi-system                              // 系统模块 [9201]
-│       └── ruoyi-gen                                 // 代码生成 [9202]
-│       └── ruoyi-job                                 // 定时任务 [9203]
-│       └── ruoyi-file                                // 文件服务 [9300]
-├── ruoyi-visual          // 图形化管理模块
-│       └── ruoyi-visual-monitor                      // 监控中心 [9100]
-├──pom.xml                // 公共依赖
-~~~
+### 选课管理
 
-## 架构图
+- 维护选课批次和开放时间
+- 控制选课批次的开放状态
+- 校验学生账号是否绑定学生档案
+- 校验重复选课
+- 校验课程时间冲突
+- 校验教学班容量
+- 支持学生选课、退选和查看个人选课记录
+- 使用事务、行锁、唯一索引和容量条件更新处理并发选课
 
-<img src="https://oscimg.oschina.net/oscnet/up-82e9722ecb846786405a904bafcf19f73f3.png"/>
+## 系统架构
 
-## 内置功能
+```text
+高校管理前端（RuoYi-Vue2 / RuoYi-Vue3）
+                    │
+                    ▼
+          ruoyi-gateway :8080
+                    │
+       ┌────────────┼────────────┐
+       ▼            ▼            ▼
+  ruoyi-auth   ruoyi-system   其他业务服务
+    :9200         :9201       :9202 / :9203 / :9300
+                    │
+                    ├── 系统管理
+                    ├── 高校教学管理 education
+                    └── MyBatis + MySQL
 
-1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
-3.  岗位管理：配置系统用户所属担任职务。
-4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
-5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
-6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
-7.  参数管理：对系统动态配置常用参数。
-8.  通知公告：系统通知公告信息发布维护。
-9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-10. 登录日志：系统登录日志记录查询包含登录异常。
-11. 在线用户：当前系统中活跃用户状态监控。
-12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
-13. 代码生成：前后端代码的生成（java、html、xml、sql）支持CRUD下载 。
-14. 系统接口：根据业务代码自动生成相关的api接口文档。
-15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
-16. 在线构建器：拖动表单元素生成相应的HTML代码。
-17. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+       Nacos：服务注册、服务发现、配置管理
+       Redis：登录状态、缓存、权限相关数据
+       Sentinel：流量控制
+       Seata：分布式事务扩展
+```
 
-## 在线体验
+当前高校业务以 `education` 包接入 `ruoyi-system`，接口通过网关统一使用 `/system/education/**`。业务稳定后，可以再拆分为独立的 `ruoyi-education` 微服务。
 
-- admin/admin123  
-- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+## 项目结构
 
-演示地址：http://ruoyi.vip  
-文档地址：http://doc.ruoyi.vip
+```text
+RuoYi-Cloud/
+├── ruoyi-gateway/                 网关，端口 8080
+├── ruoyi-auth/                    认证中心，端口 9200
+├── ruoyi-api/                     服务间调用接口
+├── ruoyi-common/                  公共组件
+│   ├── ruoyi-common-core          核心工具、统一响应、异常处理
+│   ├── ruoyi-common-security      登录用户和权限校验
+│   ├── ruoyi-common-redis         Redis 封装
+│   ├── ruoyi-common-datascope     数据权限
+│   ├── ruoyi-common-datasource    多数据源
+│   ├── ruoyi-common-log           操作日志
+│   ├── ruoyi-common-seata         分布式事务
+│   └── ruoyi-common-swagger       OpenAPI 文档
+├── ruoyi-modules/
+│   ├── ruoyi-system/              系统管理和高校教学管理，端口 9201
+│   │   └── .../com/ruoyi/system/education/
+│   │       ├── controller         高校接口层
+│   │       ├── service             高校业务层
+│   │       └── mapper              MyBatis 数据访问层
+│   ├── ruoyi-gen/                 代码生成，端口 9202
+│   ├── ruoyi-job/                 定时任务，端口 9203
+│   └── ruoyi-file/                文件服务，端口 9300
+├── ruoyi-visual/ruoyi-monitor/    服务监控，端口 9100
+├── sql/
+│   ├── ry_20260417.sql            若依基础库
+│   ├── ry_config_20260918.sql     Nacos 配置库
+│   └── ry_education.sql           高校业务表和菜单权限
+├── docs/education-phase1.md       高校第一期接口和初始化说明
+└── pom.xml                        根 Maven 配置
+```
 
-## 演示图
+## 高校业务数据表
 
-<table>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/cd1f90be5f2684f4560c9519c0f2a232ee8.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/1cbcf0e6f257c7d3a063c0e3f2ff989e4b3.jpg"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8074972883b5ba0622e13246738ebba237a.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-9f88719cdfca9af2e58b352a20e23d43b12.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-4148b24f58660a9dc347761e4cf6162f28f.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-b2d62ceb95d2dd9b3fbe157bb70d26001e9.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d67451d308b7a79ad6819723396f7c3d77a.png"/></td>
-    </tr>	 
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/5e8c387724954459291aafd5eb52b456f53.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/644e78da53c2e92a95dfda4f76e6d117c4b.jpg"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8370a0d02977eebf6dbf854c8450293c937.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-49003ed83f60f633e7153609a53a2b644f7.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d4fe726319ece268d4746602c39cffc0621.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-c195234bbcd30be6927f037a6755e6ab69c.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-ece3fd37a3d4bb75a3926e905a3c5629055.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-92ffb7f3835855cff100fa0f754a6be0d99.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-ff9e3066561574aca73005c5730c6a41f15.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-5e4daac0bb59612c5038448acbcef235e3a.png"/></td>
-    </tr>
-</table>
+| 表名 | 说明 |
+| --- | --- |
+| `edu_college` | 学院 |
+| `edu_major` | 专业 |
+| `edu_class` | 行政班 |
+| `edu_student` | 学生及若依用户绑定 |
+| `edu_teacher` | 教师 |
+| `edu_course` | 课程 |
+| `edu_classroom` | 教室 |
+| `edu_teaching_class` | 教学班和容量 |
+| `edu_schedule` | 手工排课记录 |
+| `edu_selection_batch` | 选课批次 |
+| `edu_course_selection` | 学生选课记录 |
 
+## 主要接口
 
-## 若依微服务交流群
+所有接口都经过网关，基础路径为 `/system/education`。
 
-QQ群： [![加入QQ群](https://img.shields.io/badge/已满-42799195-blue.svg)](https://jq.qq.com/?_wv=1027&k=yqInfq0S) [![加入QQ群](https://img.shields.io/badge/已满-170157040-blue.svg)](https://jq.qq.com/?_wv=1027&k=Oy1mb3p8) [![加入QQ群](https://img.shields.io/badge/已满-130643120-blue.svg)](https://jq.qq.com/?_wv=1027&k=rvxkJtXK) [![加入QQ群](https://img.shields.io/badge/已满-225920371-blue.svg)](https://jq.qq.com/?_wv=1027&k=0Ck3PvTe) [![加入QQ群](https://img.shields.io/badge/已满-201705537-blue.svg)](https://jq.qq.com/?_wv=1027&k=FnHHP4TT) [![加入QQ群](https://img.shields.io/badge/已满-236543183-blue.svg)](https://jq.qq.com/?_wv=1027&k=qdT1Ojpz) [![加入QQ群](https://img.shields.io/badge/已满-213618602-blue.svg)](https://jq.qq.com/?_wv=1027&k=nw3OiyXs) [![加入QQ群](https://img.shields.io/badge/已满-148794840-blue.svg)](https://jq.qq.com/?_wv=1027&k=kiU5WDls) [![加入QQ群](https://img.shields.io/badge/已满-118752664-blue.svg)](https://jq.qq.com/?_wv=1027&k=MtBy6YfT) [![加入QQ群](https://img.shields.io/badge/已满-101038945-blue.svg)](https://jq.qq.com/?_wv=1027&k=FqImHgH2) [![加入QQ群](https://img.shields.io/badge/已满-128355254-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=G4jZ4EtdT50PhnMBudTnEwgonxkXOscJ&authKey=FkGHYfoTKlGE6wHdKdjH9bVoOgQjtLP9WM%2Fj7pqGY1msoqw9uxDiBo39E2mLgzYg&noverify=0&group_code=128355254) [![加入QQ群](https://img.shields.io/badge/已满-179219821-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=irnwcXhbLOQEv1g-TwGifjNTA_f4wZiA&authKey=4bpzEwhcUY%2FvsPDHvzYn6xfoS%2FtOArvZ%2BGXzfr7O0%2FEqLfkKA%2BuCDXlzHIFg8t93&noverify=0&group_code=179219821) [![加入QQ群](https://img.shields.io/badge/已满-158753145-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=lx1uEdEDuxeM7rUvF3qmlFdqKqdJ5Z-R&authKey=rgyPW9yhhh4IIURKVFa6NgP3qiqH04WAzrJ0trsgkr3pjzm6sKIOGyA58oOjoj%2FJ&noverify=0&group_code=158753145) [![加入QQ群](https://img.shields.io/badge/112869560-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Kuaw0Xdlw2Nlgn6s8h9elzuquHGxGObD&authKey=cSrQcWQ%2BzQZAFFrwxaR%2BbzcumX4WRduZnd1O6JO1dlclQMiu%2BKwxAy8t2JfNp67V&noverify=0&group_code=112869560) 点击按钮入群。
+| 模块 | 示例接口 |
+| --- | --- |
+| 学院、专业、班级 | `GET /system/education/college/list` |
+| 学生、教师 | `GET /system/education/student/list` |
+| 课程、教室 | `GET /system/education/course/list` |
+| 教学班 | `GET /system/education/teaching-class/list` |
+| 手工排课 | `POST /system/education/schedule` |
+| 选课批次 | `POST /system/education/batch` |
+| 学生选课 | `POST /system/education/selection/{teachingClassId}?batchId={batchId}` |
+| 学生退选 | `DELETE /system/education/selection/{selectionId}` |
+| 我的选课 | `GET /system/education/selection/my` |
+
+接口权限使用 RuoYi 权限标识，例如：
+
+```text
+education:course:list
+education:schedule:add
+education:selection:add
+education:selection:remove
+```
+
+## 本地运行
+
+### 环境要求
+
+- JDK 17 或更高版本
+- Maven 3.9+
+- MySQL 8+
+- Redis 6+
+- Nacos 3+
+- 可选：Sentinel、Seata
+
+### 初始化数据库
+
+按以下顺序执行：
+
+```text
+1. sql/ry_20260417.sql
+2. sql/ry_config_20260918.sql
+3. sql/ry_education.sql
+```
+
+`ry_education.sql` 会创建高校业务表，并初始化高校菜单和管理员角色菜单权限。执行脚本后，需要将学生账号的 `sys_user.user_id` 写入对应的 `edu_student.user_id`，学生才能进行选课。
+
+### 配置服务
+
+默认服务注册和配置中心地址为：
+
+```text
+Nacos：127.0.0.1:8848
+Redis：127.0.0.1:6379
+MySQL：127.0.0.1:3306/ry-cloud
+```
+
+数据库用户名、密码和其他环境参数位于 Nacos 配置脚本中，生产环境请替换默认凭据和密钥。
+
+### 编译和启动
+
+```bash
+mvn clean package -DskipTests
+```
+
+建议启动顺序：
+
+```text
+Nacos → MySQL → Redis → ruoyi-auth → ruoyi-system → ruoyi-gateway
+```
+
+Windows 下也可以使用 `bin/` 目录中的启动脚本运行已打包的 JAR。
+
+## 开发约定
+
+- 通用用户、角色、菜单、日志能力复用 RuoYi，不重复实现。
+- 高校业务代码放在 `com.ruoyi.system.education` 包下。
+- Controller 负责参数和响应，业务规则放在 Service。
+- 排课冲突和选课容量校验必须在事务中执行。
+- 服务之间不要直接读写其他服务的业务表。
+- 复杂业务优先增加独立业务模块，稳定后再拆分微服务。
+
+## 后续规划
+
+- RuoYi-Vue 前端页面
+- 培养方案和课程要求
+- 选课候补队列
+- 自动排课和排课方案发布
+- 学生课表、教师课表、班级课表
+- 成绩管理和考试安排
+- 教务统计报表
+- 消息通知和导入导出
+
+## 相关文档
+
+- [高校第一期实现说明](docs/education-phase1.md)
+- [RuoYi-Cloud 官方仓库](https://github.com/yangzongzhuan/RuoYi-Cloud)
+- [本项目 GitHub 仓库](https://github.com/lyiming097-commits/ruoyi-university-management)
+
+## 许可证
+
+本项目基于 RuoYi-Cloud 开发，遵循原项目的开源许可证。使用和二次开发时请保留原项目版权和许可证说明。
